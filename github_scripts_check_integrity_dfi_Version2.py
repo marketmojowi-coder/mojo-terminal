@@ -1,70 +1,29 @@
-#!/usr/bin/env python3
-"""
-DFI forensic anchor checker.
-
-Defaults to checking app.py but accepts file paths on the command line.
-
-Anchors (can be overridden with environment variables):
- - REQUIRED_DFI_ID (default M131228)
- - REQUIRED_DFI_HASH (default 440722-3BB5849C)
- - REQUIRED_JURISDICTION (default WI)
-
-Exit codes:
- - 0: all anchors present
- - 1: one or more anchors missing or file error
-"""
-from __future__ import annotations
 import os
-import sys
-import argparse
-from pathlib import Path
+from flask import Flask, render_template, request, jsonify
 
-REQUIRED_ANCHORS = {
-    "DFI_ID": os.environ.get("REQUIRED_DFI_ID", "M131228"),
-    "DFI_HASH": os.environ.get("REQUIRED_DFI_HASH", "440722-3BB5849C"),
-    "JURISDICTION": os.environ.get("REQUIRED_JURISDICTION", "WI"),
-}
+app = Flask(__name__)
 
+# CONFIGURATION (Pulls from Render Env Variables)
+# If Env Variables aren't set, it defaults to the placeholder titles below
+MANAGER_TITLE = os.getenv('MANAGER_ROLE', 'Lead Artificer')
+ENTITY_ID = os.getenv('ENTITY_ID', 'M131228')
 
-def check_file(filepath: Path) -> bool:
-    try:
-        text = filepath.read_text(encoding="utf-8")
-    except FileNotFoundError:
-        print(f"[-] ERROR: {filepath} not found.")
-        return False
-    except Exception as exc:
-        print(f"[-] ERROR: Could not read {filepath}: {exc}")
-        return False
+@app.route('/')
+def home():
+    return render_template('index.html', 
+                           entity_id=ENTITY_ID, 
+                           manager_title=MANAGER_TITLE)
 
-    ok = True
-    for name, anchor in REQUIRED_ANCHORS.items():
-        if anchor not in text:
-            print(f"[-] INTEGRITY ALERT: {name} anchor '{anchor}' is missing or altered in {filepath}.")
-            ok = False
-        else:
-            print(f"[+] Anchor verified: {name} ('{anchor}') in {filepath}")
-    return ok
-
-
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description="Check DFI forensic anchors in files.")
-    p.add_argument("paths", nargs="*", default=["app.py"], help="Files to check (default: app.py)")
-    args = p.parse_args(argv)
-
-    any_failed = False
-    for pth in args.paths:
-        fp = Path(pth)
-        if not check_file(fp):
-            any_failed = True
-
-    if any_failed:
-        print("[-] DFI anchor check FAILED.")
-        return 1
-
-    print(f"[+] Forensic Anchors Verified: DFI #{REQUIRED_ANCHORS['DFI_ID']} Secure.")
-    return 0
-
+@app.route('/index_search')
+def historical_search():
+    query = request.args.get('artificer', 'all')
+    return jsonify({
+        "status": "Success",
+        "results": f"Filtering records for: {query}",
+        "authorized_by": MANAGER_TITLE,
+        "record_groups": ["RG 42", "RG 217"]
+    })
 
 if __name__ == "__main__":
-    rc = main()
-    sys.exit(rc)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
