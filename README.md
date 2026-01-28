@@ -1,24 +1,30 @@
-# 🏛️ Mojo Industrial Terminal (M131228)
-**Wisconsin Jurisdiction Forensic Archive | Thomas M. Saharsky Restitution Ledger**
+# Industrial Archiving Terminal (M131228)
+An advanced archival system designed for the recovery and indexing of 18th and 19th-century federal industrial records.
 
-## 📋 Project Overview
-This terminal is a hardened forensic workstation designed to track and reconcile the **$750,000,000.00 restitution status** for Thomas M. Saharsky within the State of Wisconsin. It integrates modern cloud infrastructure with the historical audit standards of **Record Group 217**.
+## Overview
+This terminal specializes in the systematic processing of federal record groups, specifically focusing on the era between **1789 and 1833**. By utilizing high-integrity archival standards, the system creates a digital bridge to industrial heritage data found in:
+* **Record Group 42:** Records of Public Buildings and Grounds.
+* **Record Group 217:** Records of the Accounting Officers of the Treasury.
 
-* **Locus:** 741 S Irwin Ave, Green Bay, WI
-* **DFI Filing:** M131228
-* **Auth Hash:** 440722-3BB5849C
-* **Voting Threshold:** 68% (Lead Artificer Mandate)
+## Key Features
+* **Zero-Leakage Integrity:** Implements cryptobiotic programming standards to ensure data persistence and homeostatic reliability.
+* **Workforce Master Index:** A dedicated search logic for 18th-century "Artificer" and federal laborer payrolls.
+* **Role-Based Authorization:** Secure gateway requiring a 68% Member Approval threshold for administrative commitments.
+
+## Technical Architecture
+* **Backend:** Python / Flask (Sanitized Variable-Based Logic)
+* **Hosting:** Render (Private Environment)
+* **Frontend:** Secure HTML/JavaScript Gateway (GoDaddy Integrated)
+
+## Usage
+1. **Historical Search:** Access the `/search` endpoint to filter the Workforce Master Index by name, trade, or year.
+2. **Inspection Protocol:** All data nodes must pass a 100% inspection by the Lead Artificer before archival commitment.
+
+## Security & Privacy
+This repository contains the functional logic of the terminal only. All sensitive business data, entity management details, and authorization keys are stored as **Private Environment Variables** and are not committed to this source code.
 
 ---
-
-## 🛡️ Security & Governance
-This repository is protected by the **Artificer's Protocol**. Any attempt to modify the physical locus or the voting logic will trigger an automated build failure via the `Lead Artificer Config Guard`.
-
-* **CODEOWNERS:** All logic changes require approval from the Lead Artificer (@thomas-saharsky).
-* **Integrity Guard:** Automated Python scripts verify the **WI** jurisdictional anchors on every pull request.
-* **Zero-Leakage:** Admin tokens and CSRF keys are stored exclusively in the Render Environment Vault.
-
----
+*© 2026 Market Mojo, LLC | Operational Locus: Green Bay, WI*
 
 ## 🛠️ Operational Instructions
 
